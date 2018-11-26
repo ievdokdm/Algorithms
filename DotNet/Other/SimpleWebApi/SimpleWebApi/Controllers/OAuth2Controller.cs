@@ -16,8 +16,10 @@ namespace SimpleWebApi.Controllers
         [HttpPost("request_auth_uri")]
         public ActionResult<AuthUriResponse> PostAuthUri([FromRoute] string brand, [FromRoute] string provider, [FromBody] AuthUriRequest loginInfo)
         {
-            uint pin = 26 * 26 * 26 * 26 * 26 - 1;
-            return new AuthUriResponse { Pin = PinGenerator.GeneratePin(pin), Uri = "https://uei.com/login", RedirectUri = "https://uei.com/login?Pin=ABCDE" };
+            int id = 26 * 26 * 26 * 26 * 26 - 1;
+            var pin = PinConverter.IntToPin(id);
+            var test = PinConverter.PinToInt(pin);
+            return new AuthUriResponse { Pin = pin, Uri = "https://uei.com/login", RedirectUri = "https://uei.com/login?Pin="+pin };
         }
 
         [HttpPost("refresh_token")]
